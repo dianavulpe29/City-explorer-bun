@@ -1,13 +1,110 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>app</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>City Explorer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 1. Antet cu navigare -->
+  <header class="site-header">
+    <div class="logo">City Explorer</div>
+    <nav class="menu">
+      <a href="#destinatii">Destinatii</a>
+      <a href="#planifica">Planifica</a>
+      <a href="#recomandari">Recomandari</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- 2. Sectiunea Destinatii (5 carduri, unul featured) -->
+    <section id="destinatii">
+      <h2>Destinatii</h2>
+      <div class="cards-grid">
+        <article class="card featured">
+          <h3>Roma</h3>
+          <p class="country"><strong>Tara:</strong> Italia</p>
+          <p class="description">Orasul etern, renumit pentru Colosseum, Vatican si istoria sa antica.</p>
+          <p class="duration"><strong>Durata recomandata:</strong> 4 zile</p>
+        </article>
+
+        <article class="card">
+          <h3>Lisabona</h3>
+          <p class="country"><strong>Tara:</strong> Portugalia</p>
+          <p class="description">Stradute pitoresti, tramvaie galbene si faimoasele pasteis de nata.</p>
+          <p class="duration"><strong>Durata recomandata:</strong> 3 zile</p>
+        </article>
+
+        <article class="card">
+          <h3>Praga</h3>
+          <p class="country"><strong>Tara:</strong> Cehia</p>
+          <p class="description">Orasul celor o suta de turnuri, cu o arhitectura gotica impresionanta.</p>
+          <p class="duration"><strong>Durata recomandata:</strong> 3 zile</p>
+        </article>
+
+        <article class="card">
+          <h3>Barcelona</h3>
+          <p class="country"><strong>Tara:</strong> Spania</p>
+          <p class="description">Capodoperele lui Gaudi, plaje insorite si o viata de noapte vibranta.</p>
+          <p class="duration"><strong>Durata recomandata:</strong> 4 zile</p>
+        </article>
+
+        <article class="card">
+          <h3>Viena</h3>
+          <p class="country"><strong>Tara:</strong> Austria</p>
+          <p class="description">Palate imperiale impunatoare, muzica clasica si cafenele celebre.</p>
+          <p class="duration"><strong>Durata recomandata:</strong> 2 zile</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 3. Sectiunea Planifica (formular) -->
+    <section id="planifica">
+      <h2>Planifica excursia</h2>
+      <form class="plan-form" action="#" method="get">
+        <div class="form-group">
+          <label for="name">Nume complet</label>
+          <input type="text" id="name" name="name" placeholder="Ex: Popescu Ion" required>
+        </div>
+
+        <div class="form-group">
+          <label for="destination">Destinatie</label>
+          <select id="destination" name="destination" required>
+            <option value="">Alege o destinatie...</option>
+            <option value="Roma">Roma</option>
+            <option value="Lisabona">Lisabona</option>
+            <option value="Praga">Praga</option>
+            <option value="Barcelona">Barcelona</option>
+            <option value="Viena">Viena</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="days">Numar de zile</label>
+          <input type="number" id="days" name="days" min="1" max="30" placeholder="Ex: 3" required>
+        </div>
+
+        <button type="submit" class="submit-btn">Planifica excursia</button>
+      </form>
+    </section>
+
+    <!-- 4. Sectiunea Recomandari -->
+    <section id="recomandari">
+      <h2>Recomandari de calatorie</h2>
+      <ul class="tips-list">
+        <li>Cumpara biletele pentru atractiile turistice online pentru a evita cozile.</li>
+        <li>Foloseste transportul in comun sau mergi pe jos pentru a descoperi locuri noi.</li>
+        <li>Incearca bucataria locala in restaurante de cartier, departe de zonele aglomerate.</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- 5. Subsol -->
+  <footer class="site-footer">
+    <p>&copy; 2026 City Explorer. Creat de Vulpe Diana.</p>
+  </footer>
+
+</body>
 </html>

@@ -1,125 +1,191 @@
+/* Resetare de baza si box-sizing */
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    color: #333333;
-    background-color: #f8fafc;
-    line-height: 1.6;
-}
-
-/* Antet Flexbox: nume în stânga, meniu în dreapta */
-.site-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 32px;
-    background-color: #1f3b5d;
-    color: #ffffff;
-}
-
-.site-header .logo {
-    margin: 0;
-    font-size: 1.5rem;
-}
-
-.menu {
-    display: flex;
-    gap: 20px;
-}
-
-.menu a {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.menu a:hover {
-    text-decoration: underline;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  color: #2b2b2b;
+  background-color: #f7f9fc;
 }
 
 main {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 24px 16px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 30px 20px;
 }
 
 section {
-    margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
-/* Grid pentru cardurile de destinații */
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+h2 {
+  margin-bottom: 20px;
+  color: #1f3b5d;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 8px;
+}
+
+/* 1. Antetul: Flexbox */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background-color: #1f3b5d;
+  color: #ffffff;
+}
+
+.site-header .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.menu {
+  display: flex;
+  gap: 20px;
+}
+
+.menu a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.menu a:hover {
+  color: #ffd166;
+}
+
+/* 2. Destinatii: Grid cu carduri */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
 }
 
 .card {
-    padding: 20px;
-    border: 1px solid #d0d7e2;
-    border-radius: 10px;
-    background-color: #ffffff;
-    transition: box-shadow 0.2s ease;
+  background-color: #ffffff;
+  padding: 20px;
+  border: 1px solid #d0d7e2;
+  border-radius: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Card evidențiat cu clasa featured */
+.card h3 {
+  color: #1f3b5d;
+  margin-bottom: 8px;
+}
+
+.card .country {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.card .description {
+  margin-bottom: 12px;
+}
+
+.card .duration {
+  font-size: 0.9rem;
+  color: #334155;
+}
+
+/* Card evidentiat */
 .card.featured {
-    border: 2px solid #5b3fd9;
-    background-color: #f3f0ff;
+  border: 2px solid #5b3fd9;
+  background-color: #f3f0ff;
 }
 
-/* Formularul: câmpuri unul sub altul, etichete deasupra, lățime maximă */
+.card.featured h3 {
+  color: #5b3fd9;
+}
+
+/* 3. Formular pe toata latimea */
 .plan-form {
-    display: flex;
-    flex-direction: column;
-    max-width: 480px;
+  background-color: #ffffff;
+  padding: 24px;
+  border: 1px solid #d0d7e2;
+  border-radius: 10px;
+  max-width: 500px;
 }
 
-.plan-form label {
-    margin-top: 12px;
-    margin-bottom: 4px;
-    font-weight: bold;
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
 }
 
-.plan-form input,
-.plan-form select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    font-size: 1rem;
+.form-group label {
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #334155;
 }
 
-.plan-form input:focus,
-.plan-form select:focus {
-    outline: 2px solid #5b3fd9;
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #ffffff;
 }
 
-.plan-form button {
-    margin-top: 18px;
-    padding: 12px;
-    background-color: #5b3fd9;
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    cursor: pointer;
+.form-group input:focus,
+.form-group select:focus {
+  outline: 2px solid #5b3fd9;
+  border-color: transparent;
 }
 
-.plan-form button:hover {
-    background-color: #492eb8;
+.submit-btn {
+  background-color: #5b3fd9;
+  color: #ffffff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.2s;
 }
 
+.submit-btn:hover {
+  background-color: #492eb8;
+}
+
+/* 4. Recomandari */
+.tips-list {
+  background-color: #ffffff;
+  padding: 20px 40px;
+  border-radius: 10px;
+  border: 1px solid #d0d7e2;
+}
+
+.tips-list li {
+  margin-bottom: 10px;
+}
+
+.tips-list li:last-child {
+  margin-bottom: 0;
+}
+
+/* 5. Subsol */
 .site-footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #e2e8f0;
-    margin-top: 40px;
+  text-align: center;
+  padding: 20px;
+  background-color: #e2e8f0;
+  color: #64748b;
+  font-size: 0.9rem;
+  margin-top: 40px;
 }
