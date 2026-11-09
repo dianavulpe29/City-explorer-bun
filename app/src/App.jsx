@@ -1,122 +1,110 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+import { useState, useEffect } from 'react'
+import {
+  getDestinatii,
+  postDestinatie,
+  patchVizitat,
+  deleteDestinatie
+} from './api/destinatii.js'
+import { getNevizitate, totalZile } from './utils/destinatii.js'
+
+import Rezumat from './components/Rezumat.jsx'
+import FormularDestinatie from './components/FormularDestinatie.jsx'
+import ListaDestinatii from './components/ListaDestinatii.jsx'
+import Cautare from './components/Cautare.jsx'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [destinatii, setDestinatii] = useState([])
+  const [incarcare, setIncarcare] = useState(true)
+  const [eroare, setEroare] = useState(null)
+  const [cautare, setCautare] = useState('')
+  const [seTrimite, setSeTrimite] = useState(false)
+
+  useEffect(() => {
+    async function incarca() {
+      try {
+        const date = await getDestinatii()
+        setDestinatii(date)
+      } catch (err) {
+        setEroare(err.message)
+      } finally {
+        setIncarcare(false)
+      }
+    }
+    incarca()
+  }, [])
+
+  async function handleToggle(id) {
+    const tinta = destinatii.find((d) => d.id === id)
+    if (!tinta) return
+    try {
+      const salvata = await patchVizitat(id, !tinta.vizitat)
+      setDestinatii((curent) =>
+        curent.map((d) => (d.id === id ? salvata : d))
+      )
+    } catch (err) {
+      alert(`Nu s-a putut schimba starea: ${err.message}`)
+    }
+  }
+
+  async function handleDelete(id) {
+    try {
+      await deleteDestinatie(id)
+      setDestinatii((curent) => curent.filter((d) => d.id !== id))
+    } catch (err) {
+      alert(`Nu s-a putut șterge destinația: ${err.message}`)
+    }
+  }
+
+  async function handleAdd(nouaDestinatie) {
+    setSeTrimite(true)
+    try {
+      const salvata = await postDestinatie(nouaDestinatie)
+      setDestinatii((curent) => [...curent, salvata])
+    } catch (err) {
+      alert(`Nu s-a putut adăuga: ${err.message}`)
+    } finally {
+      setSeTrimite(false)
+    }
+  }
+
+  const textCautare = cautare.trim().toLowerCase()
+  const afisate = destinatii.filter(
+    (d) =>
+      d.oras.toLowerCase().includes(textCautare) ||
+      d.tara.toLowerCase().includes(textCautare)
+  )
+
+  const total = destinatii.length
+  const nevizitate = getNevizitate(destinatii).length
+  const zile = totalZile(getNevizitate(destinatii))
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <main>
+      <h1>City Explorer</h1>
 
-      <div className="ticks"></div>
+      {incarcare && <p className="stare">Se încarcă destinațiile...</p>}
+      {eroare && <p className="stare eroare">Nu am putut încărca datele: {eroare}</p>}
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      {!incarcare && !eroare && (
+        <>
+          <Rezumat total={total} nevizitate={nevizitate} zile={zile} />
+          <FormularDestinatie onAdd={handleAdd} seTrimite={seTrimite} />
+          <Cautare valoare={cautare} onChange={setCautare} />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+          {destinatii.length === 0 ? (
+            <p className="gol">Nu există nicio destinație. Adaugă prima din formular.</p>
+          ) : afisate.length === 0 ? (
+            <p className="gol">Niciun rezultat pentru „{cautare}”.</p>
+          ) : (
+            <ListaDestinatii
+              destinatii={afisate}
+              onToggle={handleToggle}
+              onDelete={handleDelete}
+            />
+          )}
+        </>
+      )}
+    </main>
   )
 }
-
-export default App
